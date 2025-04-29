@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+
+  body {
+    font-family: "Bebas Neue", sans-serif;   
+    font-optical-sizing: auto;   
+    background-image: linear-gradient(to right, #1e3c72 10%, #2a5298 100%);
+  }
+}
