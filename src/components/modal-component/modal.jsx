@@ -7,7 +7,7 @@ const Modal = ({title, content, onClose}) => {
     className="absolute flex justify-center items-center inset-0 bg-opacity-20 backdrop-blur-sm transition-opacity duration-300 ease-in-out"
     onClick={onClose}
     >
-      <div className="bg-white p-6 rounded-lg shadow-xl">
+      <div className="bg-white p-6  border border-gray-300 rounded-lg shadow-2xl w-150">
         <h2 className="text-xl font-semibold mb-4">{title}</h2>
         <p className="text-gray-800">{content}</p>
         <div className="mt-6 flex justify-end">
