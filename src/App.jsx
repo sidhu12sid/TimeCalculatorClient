@@ -1,49 +1,56 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { ToastContainer, toast, Bounce } from "react-toastify";
 import Modal from "./components/modal-component/modal";
-
+import { useMutation } from "@tanstack/react-query";
+import Loader from "./components/loader-component/loader";
 
 const App = () => {
   const [punchData, setPunchData] = useState("");
-  const [response, setResponse] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const calculateTime = async () => {
     const urlProd =
       "https://timecalculator-deebf4apfbhvenca.canadacentral-01.azurewebsites.net/api/Punch/calculate";
-   // const urlDev = "https://localhost:44338/api/Punch/calculate";
-    if (!punchData) {
-      toast.error("Please enter your timesheet data.");
-    } else {
-      try {
-        const result = await axios.post(
-          urlProd,
-          {},
-          {
-            params: { punchData },
-            headers: {
-              accept: "*/*",
-              "Content-Type": "application/json-patch+json",
-            },
-          }
-        );
-        if (result.status === 200 && result.data.status && !result.data.error) {
-          setResponse(result.data.data.completionTime);
-        } else {
-          setResponse("Error: " + result.data.message);
-        }
-        setShowModal(true);
-      } catch (error) {
-        toast.error("An error occurred while calling the API.");
+    const result = await axios.post(
+      urlProd,
+      {},
+      {
+        params: { punchData },
+        headers: {
+          accept: "*/*",
+          "Content-Type": "application/json-patch+json",
+        },
       }
+    );
+    const res = result.data.data.completionTime;
+    return res;
+  };
+
+  
+  const {mutate, isPending, data} = useMutation({
+    mutationFn : calculateTime,
+    onError : (error) => {
+      toast.error(`Error: ${error.message}`); 
+    },onSuccess : () => {
+      toast.success('Punch calculation successful!');
+      setShowModal(true);
     }
+  });
+
+
+ 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if(!punchData) {
+      toast.error("Please enter your timesheet data");    
+    }else{
+      mutate(punchData)
+    }   
   };
 
   return (
     <>
-    
       <div className=" flex justify-center items-center h-screen">
         <div className="bg-white w-full max-w-2xl p-8 rounded-2xl shadow-2xl">
           <div className="flex justify-center">
@@ -83,27 +90,30 @@ const App = () => {
           </form>
         </div>
       </div>
-
-      {showModal && (<Modal
-         title="Calculation Result"
-         content={response}
-         onClose={() => setShowModal(false)}
-      />)}
-
       
-      <ToastContainer
-          position="top-center"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          transition={Bounce}
+      {isPending && (<Loader/>)}
+
+      {data && showModal && (
+        <Modal
+          title="Calculation Result"
+          content={data}
+          onClose={() => setShowModal(false)}
         />
+      )}
+
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   );
 };
