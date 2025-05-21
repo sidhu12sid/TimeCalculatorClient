@@ -3,16 +3,13 @@ import axios from "axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import Modal from "./components/modal-component/modal";
 import { useMutation } from "@tanstack/react-query";
-import Loader from "./components/loader-component/loader";
-import ModalSkeleton from "./components/modal-component/modal-skelton";
 
 const App = () => {
   const [punchData, setPunchData] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   const calculateTime = async () => {
-    const urlProd =
-      "https://timecalculator-deebf4apfbhvenca.canadacentral-01.azurewebsites.net/api/Punch/calculate";
+    const urlProd = "https://timecalculator-deebf4apfbhvenca.canadacentral-01.azurewebsites.net/api/Punch/calculate";
     const result = await axios.post(
       urlProd,
       {},
@@ -30,6 +27,7 @@ const App = () => {
 
   
   const {mutate, isPending, data} = useMutation({
+    
     mutationFn : calculateTime,
     onError : (error) => {
       toast.error(`Error: ${error.message}`); 
@@ -45,8 +43,9 @@ const App = () => {
     e.preventDefault();
     if(!punchData) {
       toast.error("Please enter your timesheet data");    
-    }else{
-      mutate(punchData)
+    }else{     
+      mutate(punchData);
+      
     }   
   };
 
@@ -91,14 +90,13 @@ const App = () => {
           </form>
         </div>
       </div>
-      
-      {isPending && (<ModalSkeleton/>)}
 
-      {data && showModal && (
+      {showModal && (
         <Modal
           title="Calculation Result"
           content={data}
           onClose={() => setShowModal(false)}
+          status = {isPending}
         />
       )}
 
