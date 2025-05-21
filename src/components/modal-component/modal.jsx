@@ -11,11 +11,11 @@ const Modal = ({title, content, onClose, status}) => {
     }`}
   >
 
-      <div className="bg-white p-6 border border-gray-300 rounded-lg shadow-2xl w-150 animate-pulse">
-        <div className="h-6 bg-gray-300 rounded w-1/3 mb-4"> </div>
-        <div className="h-4 bg-gray-300 rounded w-[83%] mb-2"></div>
-        <div className="h-4 bg-gray-300 rounded w-[65%] mb-2"></div>
-        <div className="h-10 bg-gray-300 rounded w-24 ml-auto"></div>
+      <div className="bg-white p-6 border border-gray-300 rounded-lg shadow-2xl w-150 ">
+        <div className="h-6 bg-gray-300 rounded w-1/3 mb-4 animate-pulse"> </div>
+        <div className="h-4 bg-gray-300 rounded w-[83%] mb-2 animate-pulse"></div>
+        <div className="h-4 bg-gray-300 rounded w-[65%] mb-2 animate-pulse"></div>
+        <div className="h-10 bg-gray-300 rounded w-24 ml-auto animate-pulse"></div>
       </div>
     </div>
    )}

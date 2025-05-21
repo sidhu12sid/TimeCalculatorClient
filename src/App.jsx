@@ -30,7 +30,8 @@ const App = () => {
     
     mutationFn : calculateTime,
     onError : (error) => {
-      toast.error(`Error: ${error.message}`); 
+      setShowModal(false);
+      toast.error(`Error: ${error.message}`);      
     },onSuccess : () => {
       toast.success('Punch calculation successful!');    
     }
@@ -43,6 +44,7 @@ const App = () => {
     e.preventDefault();
     if(!punchData) {
       toast.error("Please enter your timesheet data");    
+      setShowModal(false);
     }else{     
       mutate(punchData);
       
