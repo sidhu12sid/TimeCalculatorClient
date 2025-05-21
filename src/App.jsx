@@ -4,6 +4,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 import Modal from "./components/modal-component/modal";
 import { useMutation } from "@tanstack/react-query";
 import Loader from "./components/loader-component/loader";
+import ModalSkeleton from "./components/modal-component/modal-skelton";
 
 const App = () => {
   const [punchData, setPunchData] = useState("");
@@ -33,14 +34,14 @@ const App = () => {
     onError : (error) => {
       toast.error(`Error: ${error.message}`); 
     },onSuccess : () => {
-      toast.success('Punch calculation successful!');
-      setShowModal(true);
+      toast.success('Punch calculation successful!');    
     }
   });
 
 
  
   const handleSubmit = async (e) => {
+    setShowModal(true);
     e.preventDefault();
     if(!punchData) {
       toast.error("Please enter your timesheet data");    
@@ -91,7 +92,7 @@ const App = () => {
         </div>
       </div>
       
-      {isPending && (<Loader/>)}
+      {isPending && (<ModalSkeleton/>)}
 
       {data && showModal && (
         <Modal
