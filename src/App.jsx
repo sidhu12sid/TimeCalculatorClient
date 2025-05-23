@@ -93,13 +93,14 @@ const App = () => {
         </div>
       </div>
 
-      {showModal && (
+      {showModal && createPortal(
         <Modal
           title="Calculation Result"
           content={data}
           onClose={() => setShowModal(false)}
           status = {isPending}
-        />
+        />,
+        document.body
       )}
 
       <ToastContainer
