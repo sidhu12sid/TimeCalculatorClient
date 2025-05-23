@@ -3,6 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import Modal from "./components/modal-component/modal";
 import { useMutation } from "@tanstack/react-query";
+import { createPortal } from "react-dom";
 
 const App = () => {
   const [punchData, setPunchData] = useState("");
@@ -84,7 +85,8 @@ const App = () => {
             <div className="mt-4 flex items-center justify-center gap-x-6">
               <button
                 type="submit"
-                className="rounded-md w-45 bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md w-45 stat bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                
               >
                 Calculate
               </button>
@@ -99,6 +101,7 @@ const App = () => {
           content={data}
           onClose={() => setShowModal(false)}
           status = {isPending}
+         
         />,
         document.body
       )}
