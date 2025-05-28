@@ -14,6 +14,8 @@ const App = () => {
     //   "https://timecalculator-deebf4apfbhvenca.canadacentral-01.azurewebsites.net/api/Punch/calculate";
     const urlProd =
     "https://timecalculator-deebf4apfbhvenca.canadacentral-01.azurewebsites.net/api/Punch/caluclateV2";
+    const urlLocal =
+    "https://localhost:44338/api/Punch/caluclateV2";
     const result = await axios.post(
       urlProd,
       {},
@@ -25,7 +27,7 @@ const App = () => {
         },
       }
     );
-    const res = result.data.data.completionTime;
+    const res = result.data.data;
     return res;
   };
 

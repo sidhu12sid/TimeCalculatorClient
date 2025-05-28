@@ -33,7 +33,9 @@ const Modal = ({title, content, onClose, status}) => {
       >
       <div className="bg-white p-6  border border-gray-300 rounded-lg shadow-2xl w-150">
         <h2 className="text-xl font-semibold mb-4">{title}</h2>
-        <p className="text-gray-800">{content}</p>
+        <p className="text-gray-800 mb-2">{content.completionTime}</p>
+        <p className="text-gray-800 mb-2">TotalWorked : {content.totalWorked}</p>
+        <p className="text-gray-800 mb-2">Current time : {content.indianTime}</p>
         <div className="mt-6 flex justify-end">
           <button
             className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-500"
