@@ -29,7 +29,6 @@ const Modal = ({title, content, onClose, status}) => {
         className={`absolute flex justify-center items-center inset-0 bg-opacity-20 backdrop-blur-sm transition-opacity duration-500 ${
           !status ? 'opacity-100 z-50' : 'opacity-0 -z-10 pointer-events-none'
         }`}
-        onClick={onClose}
       >
       <div className="bg-white p-6  border border-gray-300 rounded-lg shadow-2xl w-150">
         <h2 className="text-xl font-semibold mb-4">{title}</h2>
