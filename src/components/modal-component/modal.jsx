@@ -252,7 +252,6 @@ const Modal = ({ title, content, onClose, status: isPending }) => {
                 fontSize: 10, fontWeight: 700, letterSpacing: ".1em",
                 color: "var(--text-dim)", marginBottom: 4, textTransform: "uppercase",
               }}>
-                Calculation Result
               </div>
               <div style={{
                 fontSize: 18, fontWeight: 800,
