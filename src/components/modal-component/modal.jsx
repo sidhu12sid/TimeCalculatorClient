@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 /* ── Helpers ───────────────────────────────────────────────────────────── */
 
@@ -30,13 +30,25 @@ function detectStatus(msg, isCurrentlyPunchedIn) {
 function ProgressRing({ pct, status }) {
   const R    = 54;
   const CIRC = 2 * Math.PI * R;
-  const offset = CIRC - (Math.min(pct, 100) / 100) * CIRC;
+
+  // Animate from 0 → real pct on mount
+  const [displayPct, setDisplayPct] = useState(0);
+
+  useEffect(() => {
+    // Small delay so the modal entrance animation finishes first
+    const timer = setTimeout(() => {
+      setDisplayPct(Math.min(pct, 100));
+    }, 120);
+    return () => clearTimeout(timer);
+  }, [pct]);
+
+  const offset = CIRC - (displayPct / 100) * CIRC;
+
   const color =
     status === "short"    ? "var(--red)"   :
     status === "overtime" ? "var(--amber)" :
     "var(--teal)";
 
-  // Track ring color adapts to theme
   const trackColor =
     document.documentElement.getAttribute("data-theme") === "light"
       ? "#e8e6e2"
@@ -45,7 +57,12 @@ function ProgressRing({ pct, status }) {
   return (
     <div style={{ position: "relative", width: 136, height: 136, flexShrink: 0 }}>
       <svg width="136" height="136" style={{ transform: "rotate(-90deg)" }}>
-        <circle cx="68" cy="68" r={R} fill="none" stroke={trackColor} strokeWidth="9" />
+        <circle
+          cx="68" cy="68" r={R}
+          fill="none"
+          stroke={trackColor}
+          strokeWidth="9"
+        />
         <circle
           cx="68" cy="68" r={R}
           fill="none"
@@ -54,7 +71,9 @@ function ProgressRing({ pct, status }) {
           strokeDasharray={CIRC}
           strokeDashoffset={offset}
           strokeLinecap="round"
-          style={{ transition: "stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)" }}
+          style={{
+            transition: "stroke-dashoffset 1s cubic-bezier(.4,0,.2,1), stroke .3s ease",
+          }}
         />
       </svg>
       <div style={{
@@ -63,12 +82,14 @@ function ProgressRing({ pct, status }) {
         alignItems: "center", justifyContent: "center",
         gap: 2,
       }}>
+        {/* Counter ticks up alongside the ring */}
         <span style={{
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: 22, fontWeight: 600,
           color, lineHeight: 1,
+          transition: "color .3s ease",
         }}>
-          {Math.min(pct, 100)}%
+          {displayPct}%
         </span>
         <span style={{ fontSize: 11, color: "var(--text-muted)" }}>
           complete
