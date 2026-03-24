@@ -201,7 +201,7 @@ const Modal = ({ title, content, onClose, status: isPending }) => {
 
   const workedMs = parseWorkedMs(totalWorked);
   const targetMs = parseTargetMs(targetWorkTime);
-  const pct      = targetMs > 0 ? Math.round((workedMs / targetMs) * 100) : 0;
+  const pct      = targetMs > 0 ? Math.floor((workedMs / targetMs) * 100) : 0;
   const status   = detectStatus(completionMessage, isCurrentlyPunchedIn);
 
   const statusMeta = {
